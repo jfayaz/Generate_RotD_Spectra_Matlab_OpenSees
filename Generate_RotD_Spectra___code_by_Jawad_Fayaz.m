@@ -2,7 +2,8 @@ clear all; clc; close all; fclose all; direc = pwd;
 %% ------------------------------------------------------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % author : JAWAD FAYAZ (email: jfayaz@uci.edu)
-% 
+%  visit: (https://jfayaz.github.io)
+
 % ------------------------------ Instructions ------------------------------------- 
 % This code develops the RotD50 Sa and RotD100 Sa Spectra of the Bi-Directional 
 % Ground Motion records provided in the 'GM' folder which must be in current folder. 
