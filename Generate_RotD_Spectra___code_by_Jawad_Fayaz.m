@@ -2,7 +2,8 @@ clear all; clc; close all; fclose all; direc = pwd;
 %% ------------------------------------------------------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % author : JAWAD FAYAZ (email: jfayaz@uci.edu)
-% 
+%  visit: (https://jfayaz.github.io)
+
 % ------------------------------ Instructions ------------------------------------- 
 % This code develops the RotD50 Sa and RotD100 Sa Spectra of the Bi-Directional 
 % Ground Motion records provided in the 'GM' folder which must be in current folder. 
@@ -86,11 +87,11 @@ No_of_GMs = length(dir([direc,'\GMs\*.AT2']))/2;
 
 txt = fileread('Generate_Spectra.tcl');
 data = strsplit(txt,'\n')';
-data{24} = ['set No_of_GMs ',round(num2str(No_of_GMs))];
-data{31} = ['for {set k 1} {$k <= ',round(num2str(length(Periods))),'} {incr k 1} { '];
-data{35} = ['for {set i ',num2str(round(Int_T_Reg_1*100)),'} {$i <= ',num2str(round(End_T_Reg_1 *100)),'} {incr i ',num2str(round(Int_T_Reg_1*100)),'} {'];
-data{40} = ['for {set i ',num2str(round((End_T_Reg_1+Int_T_Reg_2)*100)),'} {$i <= ',num2str(round(End_T_Reg_2 *100)),'} {incr i ',num2str(round(Int_T_Reg_2*100)),'} {'];
-data{45} = ['for {set i ',num2str(round((End_T_Reg_2+Int_T_Reg_3)*100)),'} {$i <= ',num2str(round(End_T_Reg_3 *100)),'} {incr i ',num2str(round(Int_T_Reg_3*100)),'} {'];
+data{23} = ['set No_of_GMs ',round(num2str(No_of_GMs))];
+data{27} = ['for {set k 1} {$k <= ',round(num2str(length(Periods))),'} {incr k 1} { '];
+data{29} = ['for {set i ',num2str(round(Int_T_Reg_1*100)),'} {$i <= ',num2str(round(End_T_Reg_1 *100)),'} {incr i ',num2str(round(Int_T_Reg_1*100)),'} {'];
+data{33} = ['for {set i ',num2str(round((End_T_Reg_1+Int_T_Reg_2)*100)),'} {$i <= ',num2str(round(End_T_Reg_2 *100)),'} {incr i ',num2str(round(Int_T_Reg_2*100)),'} {'];
+data{37} = ['for {set i ',num2str(round((End_T_Reg_2+Int_T_Reg_3)*100)),'} {$i <= ',num2str(round(End_T_Reg_3 *100)),'} {incr i ',num2str(round(Int_T_Reg_3*100)),'} {'];
 fid = fopen('Generate_Spectra.tcl','w');
 fprintf(fid,'%s\n',data{:});
 fclose(fid);

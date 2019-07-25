@@ -20,42 +20,30 @@
 ## any content, however, the 4th header line must be written exactly as per the following example:
 ##     'NPTS=  15864, DT= 0.0050' of 0.25 sec}
 ###################################################################################################################################################################################
-
 set No_of_GMs 2
-
 for {set iM 1} {$iM <= $No_of_GMs} {incr iM 1} { 
-
 puts "Running Ground Motion $iM"
 file mkdir Results/RESULTS$iM
-
 for {set k 1} {$k <= 72} {incr k 1} { 
-
-
 set j 0
 for {set i 2} {$i <= 100} {incr i 2} {
 set j [expr $j +1]
 set T_step($j) $i
 }
-
 for {set i 110} {$i <= 200} {incr i 10} {
 set j [expr $j +1]
 set T_step($j) $i
 }
-
 for {set i 225} {$i <= 500} {incr i 25} {
 set j [expr $j +1]
 set T_step($j) $i
 }
-
 set Tp [expr $T_step($k)]
-
-
 model BasicBuilder -ndm 3 -ndf 6;		
 set pi 		[expr 3.141]
 set dir 	[pwd]
 set g 		386.2
 set GMinter 0
-
 # Geometry
 set T		[expr double($Tp)/100] 
 set L 		[expr 1]; 		
@@ -70,20 +58,15 @@ set Iz  	[expr $pi*($r**4)/4];
 set K   	[expr 3*$E*$Iz/($L**3)];
 set M   	[expr ($K*($T**2)/(4*($pi**2)))];
 set Tn  	[expr 2*$pi/pow($K/$M,0.5)];
-
 # Nodal coordinates:
 node 1 0 0 0;			
 node 2 0 0 $L;
 	
 # Boundary Conditions
 fix 1 1 1 1 1 1 1; 			
-
 # Nodal masses:
 mass 2 $M $M 0. 0. 0. 0.;	
-
-
 # ##### ELEMENTS 
-
 # Geometric transformation: performs a linear geometric transformation of stiffness and resisting force from the basic system to the global-coordinate system
 set TransfTag 1; 			
 set TransfType Linear ;		
@@ -91,13 +74,11 @@ geomTransf $TransfType $TransfTag 0 -1 0 ;
  	
 # Element connectivity:
 element elasticBeamColumn 12 1 2 $A $E $G $J $Iy $Iz $TransfTag;			
-
 # Periods
 set wb				  [eigen  1];
 set wwb			      [lindex $wb 0];
 set Tb			      [expr 2*$pi/sqrt($wwb)];
 puts [format "Running Period = %.2f for Ground Motion %.0f" $Tb $iM]
-
 # Damping
 set xDamp 		0.05;					
 set MpropSwitch 1.0;
@@ -112,8 +93,6 @@ set betaKcurr 	[expr $KcurrSwitch*2.*$xDamp/($omegaI)];
 set betaKcomm 	[expr $KcommSwitch*2.*$xDamp/($omegaI)];
 set betaKinit 	[expr $KinitSwitch*2.*$xDamp/($omegaI)];
 rayleigh 		$alphaM $betaKcurr $betaKinit $betaKcomm;
-
-
 # ##### RECORDERS 
 set st _
 recorder Node -file $dir/Results/RESULTS$iM/Node$iM$st$T.out -time -node 2 -dof 1 2 3 4 5 6 disp;		
@@ -133,19 +112,15 @@ test 						$TestType $Tol $maxNumIter $printFlag;
 algorithm 					$algorithmType;
 integrator 					TRBDF2;
 analysis 					Transient;
-
-
 # ## GENERATING G3 FILES
 source 						ReadGMFile.tcl
 set iEQ 					[expr $iM];
 set iGMinput 				"GM1$iEQ GM2$iEQ"
-
 foreach GMinput 			$iGMinput {
 	set inFile 				"$dir/GMs/$GMinput.AT2";
 	set outFile 			"$dir/GMs/$GMinput.g3";
 	ReadGMFile				$inFile $outFile dt NumPts;
 };
-
 set DtAnalysis				[expr $dt/$dtfact];
 set TmaxAnalysis			[expr $dt*($NumPts-1)];
 set Nsteps					[expr int($TmaxAnalysis/$DtAnalysis)];
@@ -162,12 +137,8 @@ foreach Sloop $iloop GMdirection $iGMdirection GMfile $iGMfile GMfact $iGMfact {
 	incr IDloadTag 
 	set AccelSeries 			"Series -dt $dt -filePath $GMfile -factor [expr $GMfact*$g]"
 	pattern UniformExcitation 	$IDloadTag $GMdirection -accel $AccelSeries;
-
 };
-
-
 for {set ik 1} {$ik <= $Nsteps} {incr ik 1} {
-
 	set ok	  [analyze 1 $DtAnalysis];
 	
 	if {$ok != 0} {
