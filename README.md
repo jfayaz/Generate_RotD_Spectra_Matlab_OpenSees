@@ -18,6 +18,7 @@ The Ground Motion file must be a vector file with 4 header lines.The first 3 lin
 
 
 INPUT:
+
 This codes provides the option to have 3 different regions of developing the Spectra of ground motions with different period intervals (discretizations)
 The following inputs within the code are required:
  
@@ -31,6 +32,7 @@ The following inputs within the code are required:
  
  
 OUTPUT:
+
 The output will be provided in a saperate 'GMi_Spectra.txt' file for each ground motion record, where 'i' denotes the number of ground motion in the same of provided 'GM1i.AT2' and 'GM2i.AT2' files. The output files will be generated in a saperate folder 'Spectra' which will be created in the current folder
 The 'GMi_Spectra.txt' file will consist of space-saperated file with:
         'Periods (secs)' 'RotD50 Sa (g)' 'RotD100 Sa (g)' 
